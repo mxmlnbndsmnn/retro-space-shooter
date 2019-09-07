@@ -8,6 +8,30 @@ HIGHSCORE = 0
 PAUSED = false
 SOUNDS = true
 
+-- to be implemented...
+STATS = {
+	highscore = 0,
+	bulletsAvoided = 0,
+	bulletsTook = 0,
+	bulletsHit = 0,
+	bulletsMissed = 0,
+	enemiesSruvived = 0,
+	enemiesKilled = 0,
+	bossesKilled = 0,
+	gamesPlayed = 0,
+	itemsUsed = 0,
+}
+
+-- note: all icon images must be 64x64
+images = {}
+images.pu_shield = lg.newImage("images/pu_shield.png")
+images.pu_tripplecannon = lg.newImage("images/pu_tripplecannon.png")
+images.pu_extralife = lg.newImage("images/pu_extralife.png")
+images.pu_supercannon = lg.newImage("images/pu_supercannon.png")
+images.pu_lasercannon = lg.newImage("images/pu_lasercannon.png")
+images.pu_shrink = lg.newImage("images/pu_shrink.png")
+
+
 --[[
 	SOME IDEAS
 	
@@ -20,6 +44,8 @@ SOUNDS = true
 	- Hintergrund "Animation" (vorbeifliegende Sterne...)
 --]]
 
+-----------------------------------------------------------------------------------------------------------------------
+
 function love.load()
 	math.randomseed(os.time())
 	SCREEN = { height = lg.getHeight(), width = lg.getWidth() }
@@ -29,6 +55,7 @@ function love.load()
 	HIGHSCORE = 0
 	PAUSED = false
 	
+	love.filesystem.setIdentity( "RETRO SPACE SHOOTER" )
 	local osString = love.system.getOS()
 	if osString ~= "Android" then
 		love.window.setMode(1200, 600)	-- updateMode is not supported in versions prior to 11
@@ -75,11 +102,65 @@ function love.load()
 	
 	lvlman:startLevel(1)
 	
-	-- debug
-	debugtext = lg.newText(lg.newFont(12), "")
+	tryToReadStats()
 	
+	gui.highScoreText:set("HIGHSCORE: " .. HIGHSCORE)
+	
+	-- note: player restart also updates highscore (because it calls gameOver)
 end
 
+-----------------------------------------------------------------------------------------------------------------------
+
+-- player lost his last life
+-- save stats and reload
+function gameOver()
+	if SCORE > HIGHSCORE then
+		HIGHSCORE = SCORE
+	end
+	
+	tryToWriteStats()
+	love.load()
+end
+
+
+function tryToReadStats()
+	local contents, size = love.filesystem.read("stats.txt")
+	if not contents then
+		print("stats: file does not exist yet!")
+		return false
+	end
+	
+	-- for now: highscore
+	local nhs = tonumber( contents )
+	if nhs then
+		HIGHSCORE = nhs
+	end
+end
+
+
+function tryToWriteStats()
+	local saveDataString = tostring(HIGHSCORE)	-- for now: only the highscore
+	
+	local f = love.filesystem.newFile("stats.txt")
+	local open_ok, open_err = f:open("w")
+	if not open_ok then
+		print("stats: cannot open file!")
+		print(open_err)
+		return
+	end
+	
+	local write_ok, write_err = f:write(saveDataString)
+	f:close()
+	
+	if write_ok then
+		print("stats: successfully wrote file!")
+	else
+		print("stats: FAILED TO WRITE file!")
+		print(write_err)
+	end
+end
+
+-----------------------------------------------------------------------------------------------------------------------
 
 function love.update(dt)
 	
@@ -136,18 +217,15 @@ function love.update(dt)
 		player:push( { x = dx, y = dy } )
 	end
 	
-	--debugtext:set( string.format("pos: %d:%d", player:getPosition().x, player:getPosition().y) )
-	
 end
 
+-----------------------------------------------------------------------------------------------------------------------
 
 function love.draw()
-	-- debug
-	--lg.draw(debugtext, SCREEN.width * 0.3, 10)
-	
 	renderer:draw()
 end
 
+-----------------------------------------------------------------------------------------------------------------------
 
 function love.keypressed( key, scancode, isrepeat )
 	--[[

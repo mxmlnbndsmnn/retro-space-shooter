@@ -55,14 +55,13 @@ function Meteorite:create(data)
 			entman:onPlayerBulletHit()
 			
 		else
-			--SCORE = SCORE + 1
 			entman:onEnemyDestroyed()
-			self:destroy(true)
+			self:destroy(true, 1)
 		end
 	end
 	
 	
-	function meteorite:destroy(_drawPS)
+	function meteorite:destroy(_drawPS, _score)
 		if _drawPS then
 			local ps = {}
 			ps.system = love.graphics.newParticleSystem(testimg, 32)
@@ -81,7 +80,7 @@ function Meteorite:create(data)
 			partman:add(ps)
 		end
 		
-		lvlman:enemydestroyed()
+		lvlman:enemydestroyed(_score or 0)
 		
 		gameloop:remove(self)
 		renderer:remove(self)

@@ -9,7 +9,7 @@ function BG:create()
 	local bg = { rendererDisableHide = true }
 	
 	-- scene "objects"
-	bg.objects = {}
+	-- TODO...
 	
 	bg.stars = {}
 	for i = 1, 50 do
@@ -37,8 +37,9 @@ function BG:create()
 	
 	
 	function bg:draw()
-		lg.setColor(255, 255, 255, 20)
 		
+		-- "stars"
+		lg.setColor(255, 255, 255, 20)
 		for i = 1, #self.stars do
 			local s = self.stars[i]
 			lg.circle("fill", s.x, s.y, s.radius)

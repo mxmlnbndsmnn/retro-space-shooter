@@ -5,15 +5,6 @@ local lt = love.touch
 local mdown = love.mouse.isDown
 local toggleSoundCooldown = 0	-- ugly but simple
 
--- note: all icon images must be 64x64
-local images = {}
-images.pu_shield = lg.newImage("images/pu_shield.png")
-images.pu_tripplecannon = lg.newImage("images/pu_tripplecannon.png")
-images.pu_extralife = lg.newImage("images/pu_extralife.png")
-images.pu_supercannon = lg.newImage("images/pu_supercannon.png")
-images.pu_lasercannon = lg.newImage("images/pu_lasercannon.png")
-images.pu_shrink = lg.newImage("images/pu_shrink.png")
-
 function Input:create()
 	local input = { runWhenPaused = true }
 	
@@ -81,7 +72,7 @@ function Input:create()
 				
 				elseif tools.isPointInsideRect(touchPos, self.restartRect.body) then
 					soundmgr:playSound("click1")
-					love.load()
+					gameOver()
 				
 				elseif tools.isPointInsideRect(touchPos, self.toggleSoundRect.body)
 				and toggleSoundCooldown == 0 then
@@ -110,7 +101,7 @@ function Input:create()
 				
 				elseif tools.isPointInsideRect(mousePos, self.restartRect.body) then
 					soundmgr:playSound("click1")
-					love.load()
+					gameOver()
 				
 				elseif tools.isPointInsideRect(mousePos, self.toggleSoundRect.body)
 				and toggleSoundCooldown == 0 then

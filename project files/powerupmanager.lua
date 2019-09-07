@@ -239,6 +239,8 @@ function Powerupmanager:create()
 		if self.powerup.id == PU_EXTRALIFE then	--> use that one immediately
 			self:setPowerup(self.powerup.id)
 		end
+		
+		gui:onPowerupReady()
 	end
 	
 	function pupman:getReadyPowerupId()

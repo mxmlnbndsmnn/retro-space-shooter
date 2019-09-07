@@ -1,5 +1,6 @@
 local Gui = {}
 local lg = love.graphics
+local random = love.math.random
 
 local icon_restart	= lg.newImage("images/icon_restart.png")
 local icon_start	= lg.newImage("images/icon_start.png")
@@ -23,11 +24,37 @@ function Gui:create()
 	-- (old) highscore score
 	gui.highScoreText = lg.newText(font18, "HIGHSCORE: 0")
 	
+	-----------------------------------------------------------------------------------------------------------------------
+	
+	-- called from pupman
+	function gui:onPowerupReady()
+		local iconName = pupman:getCurrentIconName()
+		if iconName and images[iconName] then
+			local startPos = { x = random(4, 6) * 0.1 * SCREEN.width, y = random(2, 5) * 0.1 * SCREEN.height }
+			--local endPos = { x = player.body.x, y = player.body.y }
+			local endPos = { x = input.usePupCircle.body.x, y = input.usePupCircle.body.y }
+			
+			local ps = {}
+			ps.system = love.graphics.newParticleSystem(images[iconName], 32)
+			ps.system:setParticleLifetime(1)			-- particles live at least (min)s and at most (max)s.
+			ps.system:setSizeVariation(1)					-- the amount of variation (0 meaning no variation and 1 meaning full variation between start and end)
+			ps.system:setLinearAcceleration(endPos.x - startPos.x, endPos.y - startPos.y)
+			ps.system:setColors(255, 255, 255, 255, 255, 255, 255, 0)	-- fade to transparency
+			ps.pos = { x = startPos.x, y = startPos.y }
+			
+			partman:add(ps)
+			
+			ps.system:emit(1)
+		end
+	end
+	
+	-----------------------------------------------------------------------------------------------------------------------
 	
 	function gui:tick(dt)
 		self.scoreText:set("SCORE: " .. SCORE)
 	end
 	
+	-----------------------------------------------------------------------------------------------------------------------
 	
 	function gui:draw()
 		
@@ -105,7 +132,6 @@ function Gui:create()
 		lg.rectangle("line", SCREEN.width * 0.42, SCREEN.height * 0.85, SCREEN.width * 0.25, SCREEN.height * 0.05)
 		
 		-- power up timer/countdown
-		-- TODO: add a simple icon (left)
 		if pupman:isCharging() then
 			lg.setColor(120, 230, 120, 255)
 		else

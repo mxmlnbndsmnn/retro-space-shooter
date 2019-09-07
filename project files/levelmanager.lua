@@ -123,16 +123,12 @@ function Levelmanager:create()
 	
 	
 	function lvlman:startLevel(index)
-		--if leveldata[index] then
-			self.currentLevel = index
-			GAMETIME = 0	-- alt: LEVELTIME?
-			self.enemiesAlive = 0
-			self.spawnSlots = 1
-			
-		--else
-			--print("error: cannot load level", index)
-			--return false
-		--end
+		
+		self.currentLevel = index
+		GAMETIME = 0	-- alt: LEVELTIME?
+		self.enemiesAlive = 0
+		self.spawnSlots = 1
+		
 	end
 	
 	
