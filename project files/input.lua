@@ -73,6 +73,7 @@ function Input:create()
 				elseif tools.isPointInsideRect(touchPos, self.restartRect.body) then
 					soundmgr:playSound("click1")
 					gameOver()
+					love.load()
 				
 				elseif tools.isPointInsideRect(touchPos, self.toggleSoundRect.body)
 				and toggleSoundCooldown == 0 then
@@ -81,6 +82,7 @@ function Input:create()
 					toggleSoundCooldown = 0.4
 					
 				elseif tools.isPointInsideRect(touchPos, self.quitRect.body) then
+					gameOver()
 					love.event.quit()
 					
 				end
@@ -102,6 +104,7 @@ function Input:create()
 				elseif tools.isPointInsideRect(mousePos, self.restartRect.body) then
 					soundmgr:playSound("click1")
 					gameOver()
+					love.load()
 				
 				elseif tools.isPointInsideRect(mousePos, self.toggleSoundRect.body)
 				and toggleSoundCooldown == 0 then
@@ -110,6 +113,7 @@ function Input:create()
 					toggleSoundCooldown = 0.4
 					
 				elseif tools.isPointInsideRect(mousePos, self.quitRect.body) then
+					gameOver()
 					love.event.quit()
 				end
 			end

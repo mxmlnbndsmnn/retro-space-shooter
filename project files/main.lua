@@ -119,7 +119,8 @@ function gameOver()
 	end
 	
 	tryToWriteStats()
-	love.load()
+	
+	--love.load()
 end
 
 

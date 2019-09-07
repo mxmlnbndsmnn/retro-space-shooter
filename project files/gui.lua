@@ -35,11 +35,12 @@ function Gui:create()
 			local endPos = { x = input.usePupCircle.body.x, y = input.usePupCircle.body.y }
 			
 			local ps = {}
-			ps.system = love.graphics.newParticleSystem(images[iconName], 32)
+			ps.system = love.graphics.newParticleSystem(images[iconName], 1)
 			ps.system:setParticleLifetime(1)			-- particles live at least (min)s and at most (max)s.
 			ps.system:setSizeVariation(1)					-- the amount of variation (0 meaning no variation and 1 meaning full variation between start and end)
 			ps.system:setLinearAcceleration(endPos.x - startPos.x, endPos.y - startPos.y)
 			ps.system:setColors(255, 255, 255, 255, 255, 255, 255, 0)	-- fade to transparency
+			ps.system:setSizes(2.0, 1.0)						-- particles can change their sizes over their lifetime (specify at least one, max. 8)
 			ps.pos = { x = startPos.x, y = startPos.y }
 			
 			partman:add(ps)

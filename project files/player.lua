@@ -217,6 +217,7 @@ function Player:create()
 			print("player has LOST!")
 			self:destroy()
 			gameOver()
+			love.load()
 		else
 			-- lost one life but still got at least one more...
 			--> loose progress for curent powerup charge?

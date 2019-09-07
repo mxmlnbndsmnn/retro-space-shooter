@@ -1,6 +1,6 @@
 function love.conf(t)
 	t.console = true
-	--t.externalstorage  = true
+	t.externalstorage  = true	-- this must be true if we want to use love.filesystem.setIdentity
 	
 	t.window.vsync	= 1
 	t.window.msaa	= 2
