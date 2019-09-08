@@ -9,6 +9,7 @@ local spawnTypes = {
 	boss1 = 5,
 	boss2 = 6,
 	boss3 = 7,
+	boss4 = 8,
 }	-- expand...
 
 local leveldata = {}
@@ -64,15 +65,17 @@ function Levelmanager:create()
 		{ score = 350, actionType = START_BOSS_FIGHT, actionParam = 11 },
 		{ score = 351, actionType = CHANGE_SPAWN_SET, actionParam = 10 },
 		-- repeating...
-		{ score = 400, actionType = START_BOSS_FIGHT, actionParam = 11 },
+		{ score = 400, actionType = START_BOSS_FIGHT, actionParam = 12 },
 		{ score = 401, actionType = CHANGE_SPAWN_SET, actionParam = 10 },
 		{ score = 450, actionType = START_BOSS_FIGHT, actionParam = 11 },
 		{ score = 451, actionType = CHANGE_SPAWN_SET, actionParam = 10 },
+		{ score = 500, actionType = START_BOSS_FIGHT, actionParam = 12 },
+		{ score = 501, actionType = CHANGE_SPAWN_SET, actionParam = 10 },
 	}
 	
 	-- give all entries a "weigth" for their number (chance) of appearances
 	lvlman.waveSpawns = {}
-	for i = 1, 11 do
+	for i = 1, 12 do
 		lvlman.waveSpawns[i] = randombag:create()
 	end
 	
@@ -86,7 +89,7 @@ function Levelmanager:create()
 	-- meteorite + enemies normal and sticky
 	lvlman.waveSpawns[3]:add(spawnTypes.meteorite, 3)
 	lvlman.waveSpawns[3]:add(spawnTypes.enemyNormal, 4)
-	lvlman.waveSpawns[3]:add(spawnTypes.enemySticky, 3)	-- they stay at the right side
+	lvlman.waveSpawns[3]:add(spawnTypes.enemySticky, 3)	-- they stay right
 	
 	-- first boss (easy)
 	lvlman.waveSpawns[4]:add(spawnTypes.boss1, 1)
@@ -120,6 +123,9 @@ function Levelmanager:create()
 	lvlman.waveSpawns[11]:add(spawnTypes.boss1, 1)
 	lvlman.waveSpawns[11]:add(spawnTypes.boss2, 1)
 	lvlman.waveSpawns[11]:add(spawnTypes.boss3, 1)
+	
+	-- fourth boss (moderate)
+	lvlman.waveSpawns[12]:add(spawnTypes.boss4, 1)
 	
 	
 	function lvlman:startLevel(index)
@@ -232,8 +238,7 @@ function Levelmanager:create()
 	function lvlman:spawnEntityAtY(spType, _y)
 	
 		if spType == spawnTypes.meteorite then
-			--meteorite:create( { x = SCREEN.width, y = random(SCREEN.height * 0.1, SCREEN.height * 0.6), velocity = { x = -100, y = 0 } } )
-			meteorite:create( { x = SCREEN.width, y = _y, velocity = { x = random(8,11) * -METER, y = 0 } } )	-- base value: 10
+			meteorite:create( { x = SCREEN.width, y = _y, velocity = { x = random(8, 12) * -METER, y = 0 } } )	-- base value: 10
 			
 		elseif spType == spawnTypes.enemyNormal then
 			--enemy:create( { x = SCREEN.width, y = random(SCREEN.height * 0.1, SCREEN.height * 0.6), velocity = { x = -100, y = 0 } } )
@@ -253,6 +258,9 @@ function Levelmanager:create()
 			
 		elseif spType == spawnTypes.boss3 then
 			boss3:create( { x = SCREEN.width, y = _y } )
+			
+		elseif spType == spawnTypes.boss4 then
+			boss4:create( { x = SCREEN.width, y = _y } )
 			
 		else -- unknown type, cannot spawn
 			print("lvlman: unknown spawn type", spType)

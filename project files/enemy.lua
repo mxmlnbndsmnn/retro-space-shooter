@@ -74,7 +74,7 @@ function Enemy:create(data)
 		self.body.y = self.body.y + self.body.velocity.y * dt
 		
 		-- borders (remove the entity)
-		local extra = 0	-- margin around the screen rect (experimental value, probably not even needed!)
+		local extra = self.body.sizeX	-- margin around the screen rect (experimental value, probably not even needed!)
 		if self.body.x < 0 - extra
 		or self.body.x > SCREEN.width + extra
 		or self.body.y < 0 - extra

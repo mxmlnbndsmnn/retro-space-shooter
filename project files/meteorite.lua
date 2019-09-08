@@ -1,7 +1,9 @@
 local Meteorite = {}
 local lg = love.graphics
+local random = love.math.random
 
 local testimg = lg.newImage("images/testparticle.png")
+local imageM = lg.newImage("images/meteorite.png")
 
 function Meteorite:create(data)
 	local meteorite = {}
@@ -10,18 +12,29 @@ function Meteorite:create(data)
 		shape = "circle",
 		x = data.x,
 		y = data.y,
-		radius = data.radius or data.size or SCREEN.height * 0.04,
+		radius = data.radius or data.size or (random(3) * 0.01 + 0.03) * SCREEN.height,
 		velocity = { x = data.velocity.x or 0, y = data.velocity.y or 0 },
+		rotation = random(2*math.pi),
 	}
 	meteorite.hitsPlayer = true	-- on direct collision
 	meteorite.hitpoints = 1
+	
+	
+	-- image
+	-- note: the image is a little bit larger than the hitbox
+	meteorite.imgScaleX = 2 * meteorite.body.radius / imageM:getWidth()
+	meteorite.imgScaleY = 2 * meteorite.body.radius / imageM:getHeight()
+	
+	meteorite.imgOffsetX = meteorite.body.radius / meteorite.imgScaleX
+	meteorite.imgOffsetY = meteorite.body.radius / meteorite.imgScaleY
+	
 	
 	function meteorite:tick(dt)
 		self.body.x = self.body.x + self.body.velocity.x * dt
 		self.body.y = self.body.y + self.body.velocity.y * dt
 		
 		-- borders (remove the entity)
-		local extra = 0	-- margin around the screen rect (experimental value, probably not even needed!)
+		local extra = self.body.radius * 2	-- margin around the screen rect (experimental value, probably not even needed!)
 		if self.body.x < 0 - extra
 		or self.body.x > SCREEN.width + extra
 		or self.body.y < 0 - extra
@@ -33,9 +46,8 @@ function Meteorite:create(data)
 	
 	
 	function meteorite:draw()
-		lg.setColor(180, 180, 180, 255)
-		lg.circle("fill", self.body.x, self.body.y, self.body.radius)
-		lg.setColor(255, 255, 255, 255)
+		local body = self.body
+		lg.draw(imageM, body.x, body.y, body.rotation, self.imgScaleX, self.imgScaleY, self.imgOffsetX, self.imgOffsetY)
 	end
 	
 	

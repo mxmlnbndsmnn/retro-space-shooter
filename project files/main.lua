@@ -84,6 +84,7 @@ function love.load()
 	boss1 = require("boss1")
 	boss2 = require("boss2")
 	boss3 = require("boss3")
+	boss4 = require("boss4")
 	bullet = require("bullet")
 	laser = require("laser")
 	

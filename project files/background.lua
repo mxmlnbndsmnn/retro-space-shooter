@@ -39,7 +39,7 @@ function BG:create()
 	function bg:draw()
 		
 		-- "stars"
-		lg.setColor(255, 255, 255, 20)
+		lg.setColor(255, 255, 255, 40)
 		for i = 1, #self.stars do
 			local s = self.stars[i]
 			lg.circle("fill", s.x, s.y, s.radius)
