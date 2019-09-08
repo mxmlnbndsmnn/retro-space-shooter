@@ -131,7 +131,7 @@ function Levelmanager:create()
 	function lvlman:startLevel(index)
 		
 		self.currentLevel = index
-		GAMETIME = 0	-- alt: LEVELTIME?
+		GAMETIME = 0
 		self.enemiesAlive = 0
 		self.spawnSlots = 1
 		
@@ -185,8 +185,6 @@ function Levelmanager:create()
 					self:spawnEntityAtY(self.waveSpawns[self.useSpawnSetIndex]:getRandom(), SCREEN.height * 0.35)
 					
 				end
-				
-				--print("set new spawn set index:", self.useSpawnSetIndex)
 				
 				-- remove the event from the queue
 				table.remove(self.eventQueue, i)

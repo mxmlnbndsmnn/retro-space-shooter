@@ -33,15 +33,10 @@ images.pu_shrink = lg.newImage("images/pu_shrink.png")
 
 
 --[[
-	SOME IDEAS
+	SOME IDEAS AND (POSSIBLE) TODO
 	
-	- powerups nicht sofort aktivieren (Icon erscheint + fliegt nach unten -> tippen = benutzen)
-	- bosse, die einheiten spawnen
-	- TODO: particle system (player thrust)
-	- "must-hit" angreifer
-	- powerup: gegner können nicht mehr schießen (einfrieren)
-	- schutzschild (powerup): statt zeit, best. anzahl treffer einstecken
-	- Hintergrund "Animation" (vorbeifliegende Sterne...)
+	- powerup: freeze enemies so they cannot shoot
+	- background "animations" - more than "stars" ...
 --]]
 
 -----------------------------------------------------------------------------------------------------------------------
