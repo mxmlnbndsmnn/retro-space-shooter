@@ -1,7 +1,8 @@
 function love.conf(t)
-	t.console = true
+	t.console = false
 	t.externalstorage  = true	-- this must be true if we want to use love.filesystem.setIdentity
 	
+	t.window.title	= "retro space shooter"
 	t.window.vsync	= 1
 	t.window.msaa	= 2
 	
