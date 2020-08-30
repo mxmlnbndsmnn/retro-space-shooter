@@ -5,6 +5,8 @@ local random = love.math.random
 local testimg = lg.newImage("images/testparticle.png")
 local imageShip = lg.newImage("images/boss_ship_3.png")
 
+local bulletVelocity = 32
+
 -- third miniboss enemy
 --> fires two projectiles that actually aim for the player (initially, straight line)
 
@@ -68,8 +70,8 @@ function Boss:create(data)
 		--local vec2 = tools.setVectorLength( { x = -50 , y = 0 } , 25 * METER)
 		
 		-- followPlayerSpeed (if specified) enables the bullet to target the player by adjusting the y velocity by that amount (*METER) per tick
-		bullet:create( { x = self.body.x - self.body.sizeX * 0.5, y = self.body.y - self.body.sizeY * 0.25, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = -25 * METER, y = 0 }, type = "enemybullet", followPlayerSpeed = 6 } )
-		bullet:create( { x = self.body.x - self.body.sizeX * 0.5, y = self.body.y + self.body.sizeY * 0.25, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = -25 * METER, y = 0 }, type = "enemybullet", followPlayerSpeed = 6 } )
+		bullet:create( { x = self.body.x - self.body.sizeX * 0.5, y = self.body.y - self.body.sizeY * 0.25, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = -bulletVelocity * METER, y = 0 }, type = "enemybullet", followPlayerSpeed = 6 } )
+		bullet:create( { x = self.body.x - self.body.sizeX * 0.5, y = self.body.y + self.body.sizeY * 0.25, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = -bulletVelocity * METER, y = 0 }, type = "enemybullet", followPlayerSpeed = 6 } )
 		self.fireTick = self.fireTick - self.attackWait + random()	-- testing...
 		
 		-- play a sound

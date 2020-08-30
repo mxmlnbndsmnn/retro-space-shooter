@@ -5,6 +5,8 @@ local random = love.math.random
 local testimg = lg.newImage("images/testparticle.png")
 local imageShip = lg.newImage("images/boss_ship_1.png")
 
+local bulletVelocity = 34
+
 -- first miniboss enemy
 --> his projectiles actually aim for the player (initially, straight line)
 
@@ -17,7 +19,7 @@ function Boss:create(data)
 		y = data.y,
 		sizeX = SCREEN.width * 0.08,
 		sizeY = SCREEN.height * 0.1,
-		velocity = { x = -8 * METER, y = 4 * METER },
+		velocity = { x = -8 * METER, y = 6 * METER },
 	}
 	boss.attackWait = 2.4
 	boss.fireTick = 0
@@ -47,11 +49,11 @@ function Boss:create(data)
 		-- move up and down
 		if self.body.velocity.y > 0 then	--> moving down
 			if self.body.y >= SCREEN.height * 0.58 then
-				self.body.velocity.y = -random(3, 8) * METER
+				self.body.velocity.y = -random(5, 8) * METER
 			end
 		else	--> moving up (or not at all)
 			if self.body.y <= SCREEN.height * 0.12 then
-				self.body.velocity.y = random(3, 8) * METER
+				self.body.velocity.y = random(5, 8) * METER
 			end
 		end
 		self.body.y = self.body.y + self.body.velocity.y * dt
@@ -68,7 +70,7 @@ function Boss:create(data)
 		--local vec2 = tools.setVectorLength( { x = -50 , y = 0 } , 25 * METER)
 		
 		-- followPlayerSpeed (if specified) enables the bullet to target the player by adjusting the y velocity by that amount (*METER) per tick
-		bullet:create( { x = self.body.x - self.body.sizeX * 0.5, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = -25 * METER, y = 0 }, type = "enemybullet", followPlayerSpeed = 7 } )
+		bullet:create( { x = self.body.x - self.body.sizeX * 0.5, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = -bulletVelocity * METER, y = 0 }, type = "enemybullet", followPlayerSpeed = 7 } )
 		self.fireTick = self.fireTick - self.attackWait + random()	-- testing...
 		
 		-- play a sound

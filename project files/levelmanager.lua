@@ -13,8 +13,8 @@ local spawnTypes = {
 }	-- expand...
 
 local leveldata = {}
-local maxEnemyCounter = 7	-- no more enemies than that amount at a time
-local spawnRate = 4		-- only spawn once per X seconds
+local maxEnemyCounter = 8	-- no more enemies than that amount at a time
+local spawnRate = 3		-- only spawn once per X seconds
 local spawnTick = 0
 --local fightingBoss = false	-- (not) allowed spawn normal enemies right now?
 
@@ -236,17 +236,17 @@ function Levelmanager:create()
 	function lvlman:spawnEntityAtY(spType, _y)
 	
 		if spType == spawnTypes.meteorite then
-			meteorite:create( { x = SCREEN.width, y = _y, velocity = { x = random(8, 12) * -METER, y = 0 } } )	-- base value: 10
+			meteorite:create( { x = SCREEN.width, y = _y, velocity = { x = random(16, 22) * -METER, y = 0 } } )
 			
 		elseif spType == spawnTypes.enemyNormal then
 			--enemy:create( { x = SCREEN.width, y = random(SCREEN.height * 0.1, SCREEN.height * 0.6), velocity = { x = -100, y = 0 } } )
-			enemy:create( { x = SCREEN.width, y = _y, velocity = { x = -7 * METER, y = 0 }, movementType = "normal" } )
+			enemy:create( { x = SCREEN.width, y = _y, velocity = { x = -12 * METER, y = 0 }, movementType = "normal" } )
 		
 		elseif spType == spawnTypes.enemySticky then
-			enemy:create( { x = SCREEN.width, y = _y, velocity = { x = -7 * METER, y = 2 * METER }, movementType = "stay_right" } )
+			enemy:create( { x = SCREEN.width, y = _y, velocity = { x = -12 * METER, y = 10 * METER }, movementType = "stay_right" } )
 		
 		elseif spType == spawnTypes.enemyMobile then
-			enemy:create( { x = SCREEN.width, y = _y, velocity = { x = -5 * METER, y = -6 * METER }, movementType = "stray" } )
+			enemy:create( { x = SCREEN.width, y = _y, velocity = { x = -8 * METER, y = -10 * METER }, movementType = "stray" } )
 			
 		elseif spType == spawnTypes.boss1 then
 			boss1:create( { x = SCREEN.width, y = _y } )

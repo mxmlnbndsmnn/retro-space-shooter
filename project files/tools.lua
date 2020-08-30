@@ -301,8 +301,8 @@ function tools.trimVector(vector, maximumLength)
 	else
 		-- vector norm too big
 		local vx, vy
-		vx = math.floor(vector.x * maxLen/currLen)
-		vy = math.floor(vector.y * maxLen/currLen)
+		vx = vector.x * maxLen/currLen
+		vy = vector.y * maxLen/currLen
 		return {x = vx, y = vy}
 	end
 	

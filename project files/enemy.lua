@@ -5,6 +5,8 @@ local random = love.math.random
 local testimg = lg.newImage("images/testparticle.png")
 local imageShip = lg.newImage("images/enemy_ship_1.png")
 
+local bulletVelocity = 44	-- use non-negative value here
+
 -- note: enemy should have multiple types of movement to "select" from initially
 --> fly straight to the left / move up and down only but not horizontal / move both to the left and up and down
 
@@ -50,22 +52,22 @@ function Enemy:create(data)
 		if self.movementType == "stay_right" then
 			if self.body.velocity.y > 0 then	--> moving down
 				if self.body.y >= SCREEN.height * 0.58 then
-					self.body.velocity.y = -random(3,6) * METER
+					self.body.velocity.y = -random(5,10) * METER
 				end
 			else	--> moving up (or not at all)
 				if self.body.y <= SCREEN.height * 0.12 then
-					self.body.velocity.y = random(3,6) * METER
+					self.body.velocity.y = random(5,10) * METER
 				end
 			end
 			
 		elseif self.movementType == "stray" then
 			if self.body.velocity.y > 0 then	--> moving down
 				if self.body.y >= SCREEN.height * 0.58 then
-					self.body.velocity.y = -6 * METER
+					self.body.velocity.y = -10 * METER
 				end
 			else	--> moving up (or not at all)
 				if self.body.y <= SCREEN.height * 0.12 then
-					self.body.velocity.y = 6 * METER
+					self.body.velocity.y = 10 * METER
 				end
 			end
 		end
@@ -91,7 +93,7 @@ function Enemy:create(data)
 	
 	
 	function enemy:shoot()
-		bullet:create( { x = self.body.x, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = -35 * METER, y = 0 }, type = "enemybullet" } )
+		bullet:create( { x = self.body.x, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = -bulletVelocity * METER, y = 0 }, type = "enemybullet" } )
 		self.fireTick = self.fireTick - self.attackWait + random()	-- testing...
 		
 		-- play a sound

@@ -3,7 +3,12 @@ local Player = {}
 local lg = love.graphics
 local testimg = lg.newImage("images/testparticle.png")
 local imageShip = lg.newImage("images/player_ship_1.png")
+
+-- define some properties here
 local pAttackWait = 0.4
+local pSpeedNormal = 28
+local pSpeedFast = 34
+local bulletVelocity = 52
 
 function Player:create()
 	local player = {}
@@ -19,7 +24,7 @@ function Player:create()
 		sizeY = SCREEN.height * 0.07,
 		velocity = { x = 0, y = 0 },
 	}
-	player.speed = 17 * METER	--> note: size is also modified in player:resetSize
+	player.speed = pSpeedNormal * METER	--> note: size is also modified in player:resetSize
 	player.attackWait = pAttackWait
 	player.lastHurtTimer = 0
 	
@@ -133,12 +138,12 @@ function Player:create()
 		end
 		
 		-- create a new bullet...
-		bullet:create( { x = self.body.x, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = 36 * METER, y = 0 }, type = "playerbullet" } )
+		bullet:create( { x = self.body.x, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = bulletVelocity * METER, y = 0 }, type = "playerbullet" } )
 		
 		-- extra: shoot three bullets total when powerup is active
 		if pupman:isPowerupActive(PU_TRIPPLECANNON) then
-			bullet:create( { x = self.body.x, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = 35.6 * METER, y = -24 }, type = "playerbullet" } )
-			bullet:create( { x = self.body.x, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = 35.6 * METER, y =  24 }, type = "playerbullet" } )
+			bullet:create( { x = self.body.x, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = 0.99 * bulletVelocity * METER, y = -24 }, type = "playerbullet" } )
+			bullet:create( { x = self.body.x, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = 0.99 * bulletVelocity * METER, y =  24 }, type = "playerbullet" } )
 		end
 		
 		-- play a sound
@@ -252,7 +257,7 @@ function Player:create()
 	function player:shrinkSize()
 		self.body.sizeX = SCREEN.width * 0.025
 		self.body.sizeY = SCREEN.height * 0.035
-		self.speed = 22 * METER
+		self.speed = pSpeedFast * METER
 		
 		self:updateImageProperties()
 	end
@@ -261,7 +266,7 @@ function Player:create()
 	function player:resetSize()
 		self.body.sizeX = SCREEN.width * 0.045
 		self.body.sizeY = SCREEN.height * 0.07
-		self.speed = 17 * METER
+		self.speed = pSpeedNormal * METER
 		
 		self:updateImageProperties()
 	end

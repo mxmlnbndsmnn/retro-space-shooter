@@ -5,6 +5,8 @@ local random = love.math.random
 local testimg = lg.newImage("images/testparticle.png")
 local imageShip = lg.newImage("images/boss_ship_2.png")
 
+local bulletVelocity = 34
+
 -- second miniboss enemy
 --> has a shield that activates every few seconds and lasts a few seconds
 
@@ -88,7 +90,7 @@ function Boss:create(data)
 		--local vec2 = tools.setVectorLength( { x = -50 , y = 0 } , 25 * METER)
 		
 		-- followPlayerSpeed (if specified) enables the bullet to target the player by adjusting the y velocity by that amount (*METER) per tick
-		bullet:create( { x = self.body.x - self.body.sizeX * 0.5, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = -25 * METER, y = 0 }, type = "enemybullet", followPlayerSpeed = 2 } )
+		bullet:create( { x = self.body.x - self.body.sizeX * 0.5, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = -bulletVelocity * METER, y = 0 }, type = "enemybullet", followPlayerSpeed = 2 } )
 		self.fireTick = self.fireTick - self.attackWait + random()	-- testing...
 		
 		-- play a sound

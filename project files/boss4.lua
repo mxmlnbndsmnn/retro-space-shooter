@@ -5,6 +5,8 @@ local random = love.math.random
 local testimg = lg.newImage("images/testparticle.png")
 local imageShip = lg.newImage("images/boss_ship_4.png")
 
+local bulletVelocity = 32
+
 -- fourth miniboss enemy
 --> fires two projectiles that actually aim for the player (initially, straight line)
 --> plus: sometimes spawns drones that also attack the player
@@ -20,7 +22,7 @@ function Boss:create(data)
 		sizeY = SCREEN.height * 0.11,
 		velocity = { x = -8 * METER, y = 4 * METER },
 	}
-	boss.attackWait = 2.8
+	boss.attackWait = 2.6
 	boss.fireTick = 0
 	boss.hitpoints = 30
 	
@@ -76,8 +78,8 @@ function Boss:create(data)
 	
 	function boss:shoot()
 		-- followPlayerSpeed (if specified) enables the bullet to target the player by adjusting the y velocity by that amount (*METER) per tick
-		bullet:create( { x = self.body.x - self.body.sizeX * 0.5, y = self.body.y - self.body.sizeY * 0.25, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = -25 * METER, y = 0 }, type = "enemybullet", followPlayerSpeed = 6 } )
-		bullet:create( { x = self.body.x - self.body.sizeX * 0.5, y = self.body.y + self.body.sizeY * 0.25, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = -25 * METER, y = 0 }, type = "enemybullet", followPlayerSpeed = 6 } )
+		bullet:create( { x = self.body.x - self.body.sizeX * 0.5, y = self.body.y - self.body.sizeY * 0.25, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = -bulletVelocity * METER, y = 0 }, type = "enemybullet", followPlayerSpeed = 6 } )
+		bullet:create( { x = self.body.x - self.body.sizeX * 0.5, y = self.body.y + self.body.sizeY * 0.25, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = -bulletVelocity * METER, y = 0 }, type = "enemybullet", followPlayerSpeed = 6 } )
 		self.fireTick = self.fireTick - self.attackWait + random(10) * 0.1
 		
 		-- play a sound
@@ -91,7 +93,7 @@ function Boss:create(data)
 		--sizeX = SCREEN.width * 0.05
 		--sizeY = SCREEN.height * 0.06
 		
-		enemy:create( { x = self.body.x, y = self.body.y, sizeX = SCREEN.width * 0.0375, sizeY = SCREEN.height * 0.045, velocity = { x = -5 * METER, y = -6 * METER }, movementType = "stray" } )
+		enemy:create( { x = self.body.x, y = self.body.y, sizeX = SCREEN.width * 0.0375, sizeY = SCREEN.height * 0.045, velocity = { x = -7 * METER, y = -10 * METER }, movementType = "stray" } )
 		
 		self.spawnTick = self.spawnTick - self.spawnWait + random(10) * 0.1
 	end
