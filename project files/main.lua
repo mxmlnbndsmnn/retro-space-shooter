@@ -30,6 +30,7 @@ images.pu_extralife = lg.newImage("images/pu_extralife.png")
 images.pu_supercannon = lg.newImage("images/pu_supercannon.png")
 images.pu_lasercannon = lg.newImage("images/pu_lasercannon.png")
 images.pu_shrink = lg.newImage("images/pu_shrink.png")
+images.pu_explosive = lg.newImage("images/pu_explosive.png")
 
 
 --[[
@@ -82,6 +83,7 @@ function love.load()
 	boss4 = require("boss4")
 	bullet = require("bullet")
 	laser = require("laser")
+	explosion = require("explosion")
 	
 	player = require("player"):create()
 	

@@ -14,6 +14,7 @@ function Soundmanager:create()
 		shoot1 = love.audio.newSource("sounds/alien_shoot_1.mp3", "static"),
 		shoot2 = love.audio.newSource("sounds/alien_shoot_2.mp3", "static"),
 		shoot3 = love.audio.newSource("sounds/alien_shoot_3.mp3", "static"),
+		explosion = love.audio.newSource("sounds/explosion.mp3", "static"),
 		click1 = love.audio.newSource("sounds/click_1.mp3", "static"),
 	}
 	

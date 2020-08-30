@@ -14,6 +14,7 @@ function Bullet:create(data)
 		velocity = { x = data.velocity.x or 0, y = data.velocity.y or 0 },
 	}
 	bullet.followPlayerSpeed = data.followPlayerSpeed	-- enemy bullets might follow the player
+	bullet.explosive = data.explosive
 	
 	
 	function bullet:tick(dt)
@@ -58,7 +59,23 @@ function Bullet:create(data)
 		lg.rectangle("fill", self.body.x - self.body.sizeX/2, self.body.y - self.body.sizeY/2, self.body.sizeX, self.body.sizeY)
 	end
 	
+	-- bullet gets destroyed because it hit something check if the bullet should explode etc.
+	function bullet:destroyOnImpact()
+		if self.explosive then
+			-- create an explosion (draw + hurt)
+			local explo = explosion:create{ x = self.body.x, y = self.body.y, radius = SCREEN.width * 0.1, ttl = 1, }
+			explo:hurtEntities{ hurtPlayer = false }
+			
+			-- some simple sound
+			soundmgr:playSound("explosion")
+			
+		end
+		
+		-- finally, destroy the entity
+		self:destroy()
+	end
 	
+	-- generic destroy, no further logic
 	function bullet:destroy()
 		
 		

@@ -13,6 +13,12 @@ function Entitymanager:create()
 	end
 	
 	
+	-- fetch all entities
+	function entman:getEntities()
+		return self.entities
+	end
+	
+	
 	function entman:tick(dt)
 		
 		-- manage collisions etc
@@ -43,12 +49,11 @@ function Entitymanager:create()
 			meteorite, playerbullet
 			
 			playerbullet, enemy
-			playerbullet, enemybullet
 			
 			enemy, player
 			
 			enemybullet, player
-			_enemybullet, playerbullet_ NO! playerbullet can hit enemy rockets, but not normal enemybullet
+			
 		--]]
 		
 		-- only check once per tick -> check if e1 collides with e2, not vice versa (this would be a second check for the same two entities)
@@ -59,15 +64,19 @@ function Entitymanager:create()
 				
 				-- hurt the player
 				e2:hurt()
-				-- destroy the meteorite
+				-- destroy the meteorite + draw particles
 				e1:destroy(true)
 				
 			elseif e2Type == "playerbullet" then
 				--print("meteorite hits playerbullet")
 				
+				if e2.explosive then
+					
+				end
+				
 				-- destroy the playerbullet and hurt the meteorite (use hurt even if it is going to destroy it in one hit!)
 				e1:hurt()
-				e2:destroy()
+				e2:destroyOnImpact()
 				
 				--self:onPlayerBulletHit()
 				
@@ -85,15 +94,8 @@ function Entitymanager:create()
 				-- hurt the player
 				e2:hurt()
 				-- destroy the enemybullet
-				e1:destroy(true)
+				e1:destroyOnImpact()
 				
-			--[[
-			elseif e2Type == "playerbullet" then
-				print("enemybullet hits playerbullet")
-				-- destroy both the playerbullet and the enemybullet
-				e1:destroy(true)
-				e2:destroy(true)
-			--]]
 			end
 			
 		elseif e1Type == "enemy" then
@@ -102,7 +104,7 @@ function Entitymanager:create()
 				
 				-- hurt the player
 				e2:hurt()
-				-- destroy the enemy
+				-- destroy the enemy + draw particles
 				e1:destroy(true)
 				
 			elseif e2Type == "playerlaser"
@@ -115,7 +117,7 @@ function Entitymanager:create()
 				
 				-- destroy the playerbullet and hurt the enemy
 				e1:hurt()
-				e2:destroy(true)
+				e2:destroyOnImpact()
 				
 			end
 			

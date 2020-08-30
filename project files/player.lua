@@ -137,13 +137,24 @@ function Player:create()
 			return
 		end
 		
-		-- create a new bullet...
-		bullet:create( { x = self.body.x, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = bulletVelocity * METER, y = 0 }, type = "playerbullet" } )
 		
-		-- extra: shoot three bullets total when powerup is active
-		if pupman:isPowerupActive(PU_TRIPPLECANNON) then
-			bullet:create( { x = self.body.x, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = 0.99 * bulletVelocity * METER, y = -24 }, type = "playerbullet" } )
-			bullet:create( { x = self.body.x, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = 0.99 * bulletVelocity * METER, y =  24 }, type = "playerbullet" } )
+		-- create a new bullet...
+		if pupman:isPowerupActive(PU_EXPLOSIVE) then
+			
+			-- extra: explosive bullets
+			bullet:create{ x = self.body.x, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = bulletVelocity * METER, y = 0 }, type = "playerbullet", explosive = true }
+			
+		else
+			
+			-- one normal bullet
+			bullet:create{ x = self.body.x, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = bulletVelocity * METER, y = 0 }, type = "playerbullet" }
+			
+			-- extra: shoot three bullets total when powerup is active
+			if pupman:isPowerupActive(PU_TRIPPLECANNON) then
+				bullet:create{ x = self.body.x, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = 0.99 * bulletVelocity * METER, y = -24 }, type = "playerbullet" }
+				bullet:create{ x = self.body.x, y = self.body.y, sizeX = SCREEN.width/80, sizeY = SCREEN.height/80, velocity = { x = 0.99 * bulletVelocity * METER, y =  24 }, type = "playerbullet" }
+			end
+			
 		end
 		
 		-- play a sound

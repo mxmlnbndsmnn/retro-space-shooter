@@ -58,46 +58,53 @@ PU_EXTRALIFE = 3
 PU_SUPERCANNON = 4
 PU_LASERCANNON = 5
 PU_SHRINK = 6
+PU_EXPLOSIVE = 7
 
 local POWERUPS = {
-	[1] = {
+	[PU_SHIELD] = {
 		-- shield
 		id = PU_SHIELD,
 		icon = "pu_shield",
 		duration = 8,		-- seconds
 		chance = CHANCE_NORMAL,
 	},
-	[2] = {
+	[PU_TRIPPLECANNON] = {
 		-- shoot three bullets at once
 		id = PU_TRIPPLECANNON,
 		icon = "pu_tripplecannon",
 		duration = 10,		-- seconds
 		chance = CHANCE_HIGH,
 	},
-	[3] = {
+	[PU_EXTRALIFE] = {
 		-- restore a life (if not already at maximum)
 		id = PU_EXTRALIFE,
 		icon = "pu_extralife",
 		duration = 3,		-- seconds / cooldown? not used
 		chance = CHANCE_NORMAL,
 	},
-	[4] = {
+	[PU_SUPERCANNON] = {
 		id = PU_SUPERCANNON,
 		icon = "pu_supercannon",
 		duration = 10,
 		chance = CHANCE_NORMAL,
 	},
-	[5] = {
+	[PU_LASERCANNON] = {
 		id = PU_LASERCANNON,
 		icon = "pu_lasercannon",
 		duration = 10,
 		chance = CHANCE_NORMAL,
 	},
-	[6] = {
+	[PU_SHRINK] = {
 		id = PU_SHRINK,
 		icon = "pu_shrink",
 		duration = 10,
 		chance = CHANCE_LOW,
+	},
+	[PU_EXPLOSIVE] = {
+		id = PU_EXPLOSIVE,
+		icon = "pu_explosive",
+		duration = 10,
+		chance = CHANCE_HIGH,
 	},
 }
 
